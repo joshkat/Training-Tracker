@@ -27,32 +27,28 @@ export default function EmailForm() {
     }
   }
   return (
-    <form className="flex flex-col items-center" onSubmit={loginHandler}>
-      <label className="form-control w-full max-w-xs">
+    <form className="flex flex-col" onSubmit={loginHandler}>
+      <label className="form-control w-full">
         <div className="label">
           <span className="label-text">Email</span>
         </div>
         <input
           type="email"
           placeholder="schwarzenegger@gmail.com"
-          className="input input-bordered w-full max-w-xs"
+          className="input input-bordered w-full"
         />
       </label>
-      <label className="form-control w-full max-w-xs">
+      <label className="form-control w-full">
         <div className="label">
           <span className="label-text">Password</span>
         </div>
         <input
           type="password"
           placeholder=""
-          className="input input-bordered w-full max-w-xs"
+          className="input input-bordered w-full"
         />
       </label>
-      <input
-        type="submit"
-        value={"Login"}
-        className="btn w-full max-w-[320px] mt-2"
-      />
+      <input type="submit" value={"Login"} className="btn w-full mt-2" />
     </form>
   );
 }

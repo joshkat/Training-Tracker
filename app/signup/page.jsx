@@ -3,6 +3,7 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { firebaseAuth } from "../utils/firebaseInit";
 import Cookies from "js-cookie";
+import Link from "next/link";
 
 export default function SignUp() {
   function signupHandler(e) {
@@ -39,44 +40,47 @@ export default function SignUp() {
   }
 
   return (
-    <div className="relative top-56">
+    <div className="relative top-20 p-10 sm:p-36">
       <form className="flex flex-col items-center" onSubmit={signupHandler}>
-        <label className="form-control w-full max-w-xs">
+        <label className="form-control w-full">
           <div className="label">
             <span className="label-text">Email</span>
           </div>
           <input
             type="email"
             placeholder="noobie@gmail.com"
-            className="input input-bordered w-full max-w-xs"
+            className="input input-bordered w-full"
           />
         </label>
-        <label className="form-control w-full max-w-xs">
+        <label className="form-control w-full">
           <div className="label">
             <span className="label-text">Password</span>
           </div>
           <input
             type="password"
             placeholder=""
-            className="input input-bordered w-full max-w-xs"
+            className="input input-bordered w-full"
           />
         </label>
-        <label className="form-control w-full max-w-xs">
+        <label className="form-control w-full">
           <div className="label">
             <span className="label-text">Confirm Password</span>
           </div>
           <input
             type="password"
             placeholder=""
-            className="input input-bordered w-full max-w-xs"
+            className="input input-bordered w-full"
           />
         </label>
-        <input
-          type="submit"
-          value="Sign Up"
-          className="btn w-full max-w-[320px] mt-2"
-        />
+        <input type="submit" value="Sign Up" className="btn w-full mt-2" />
       </form>
+      <p className="text-center mt-2">
+        Already have an account? Click{" "}
+        <Link href="/login" className="link link-success">
+          here
+        </Link>{" "}
+        to log in!
+      </p>
     </div>
   );
 }

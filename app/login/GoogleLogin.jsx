@@ -1,15 +1,25 @@
 "use client";
 
-import { GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { firebaseAuth } from "../utils/firebaseInit";
+import Image from "next/image";
+import Cookies from "js-cookie";
 
 export default function GoogleLogin() {
-  function handleLogin() {
+  async function handleLogin() {
     const provider = new GoogleAuthProvider();
-    return signInWithRedirect(firebaseAuth, provider);
+
+    try {
+      const userCred = await signInWithPopup(firebaseAuth, provider);
+      Cookies.set("user_id", userCred.user.uid);
+      window.location = "/";
+    } catch (err) {
+      console.error(err);
+    }
   }
   return (
-    <button className="btn" onClick={e => handleLogin()}>
+    <button className="btn w-full" onClick={e => handleLogin()}>
+      <Image src="/googleG.svg" height={20} width={20} alt="G" />
       Login with Google
     </button>
   );
