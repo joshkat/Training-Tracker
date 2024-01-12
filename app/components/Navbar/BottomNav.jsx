@@ -15,7 +15,7 @@ export default function BottomNav() {
     }
   });
   return (
-    <div className={`btm-nav dark:bg-base-300 sm:hidden`}>
+    <div className={`btm-nav bg-base-200 sm:hidden`}>
       <Link
         href="workouts"
         id="workouts"
