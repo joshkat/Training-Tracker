@@ -1,3 +1,10 @@
+import IsLoggedIn from "./utils/IsLoggedIn";
+
 export default function Home() {
-  return <main className="">Home</main>;
+  return (
+    <main>
+      <IsLoggedIn />
+      Home
+    </main>
+  );
 }
