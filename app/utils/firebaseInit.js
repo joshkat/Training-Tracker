@@ -1,6 +1,13 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth, signOut } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  getFirestore,
+} from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCjqXuLawGVgODcSriFEtBmverGuXiXLOU",
@@ -15,9 +22,29 @@ const firebaseConfig = {
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
 const firebaseAuth = getAuth(firebaseApp);
+const db = getFirestore(firebaseApp);
 
 function logout() {
   signOut(firebaseAuth);
 }
 
-export { firebaseApp, firebaseAuth, logout };
+async function getUserTemplates() {
+  try {
+    const user = firebaseAuth.currentUser;
+    if (user) {
+      const userDocRef = doc(db, "users", user.uid);
+      const userDocSnap = await getDoc(userDocRef);
+      if (userDocSnap.exists()) {
+        const templatesArray = userDocSnap.data().templates;
+        return templatesArray;
+      } else {
+        return [];
+      }
+    }
+    console.log("User isn't signed in");
+  } catch (err) {
+    console.error("Error fetching user templates: ", err);
+  }
+}
+
+export { firebaseApp, firebaseAuth, logout, getUserTemplates };

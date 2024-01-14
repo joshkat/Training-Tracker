@@ -4,6 +4,7 @@ export default function Workout({
   notes,
   updateSets,
   updateNotes,
+  removeWorkout,
 }) {
   // sets is an array of objects that takes the shape of {lbs:int, reps:int}
   const handleSetChange = (setIndex, updatedSet) => {
@@ -30,6 +31,12 @@ export default function Workout({
     <div className="card w-full bg-base-200 mb-5">
       <div className="card-body">
         <h2 className="card-title">{name}</h2>
+        <button
+          className="btn btn-error btn-sm absolute right-3 top-2"
+          onClick={removeWorkout}
+        >
+          Delete
+        </button>
         <textarea
           type="text"
           className="input rounded-sm"
@@ -93,14 +100,14 @@ export default function Workout({
 
         <div className="flex w-full">
           <button
-            className="flex-grow rounded-md hover:bg-base-300 text-center transition duration-300 bg-success text-black"
+            className="flex-grow btn btn-xs btn-success"
             onClick={handleAddSet}
           >
             Add Set
           </button>
           <div className="divider divider-horizontal bg-top-transparent"></div>
           <button
-            className="flex-grow rounded-md hover:bg-base-300 text-center transition duration-300 bg-error text-black"
+            className="flex-grow btn btn-xs btn-error"
             onClick={handleRemoveLastSet}
           >
             Remove Set

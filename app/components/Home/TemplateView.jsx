@@ -1,22 +1,25 @@
 "use client";
 import Template from "./Template";
-export default function TemplateView({ setCurrentTemplate }) {
-  const temp = [0, 1, 2, 3];
+export default function TemplateView({ templates, setCurrentTemplate }) {
   return (
     // adjust the second value in the height calc depending on what other things are added to home
-    <div className="grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-4 justify-items-center overflow-scroll h-[calc(100vh - (65px))] no-scrollbar">
-      {temp.map((val, index) => (
-        <Template
-          title={"You know what they do to guys like us in prison"}
-          summary={
-            "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur perferendis dolore exercitationem minus accusantium? Reprehenderit aliquid adipisci debitis vitae distinctio repellat repudiandae! Quis consequatur consequuntur quaerat cum earum nisi natus? "
-          }
-          lastTrained={"some date"}
-          index={index}
-          key={index}
-          setCurrentTemplate={setCurrentTemplate}
-        />
-      ))}
-    </div>
+    <>
+      {templates === null ? (
+        <span className="loading loading-spinner w-24 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></span>
+      ) : (
+        <div className="grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-4 justify-items-center overflow-scroll h-[calc(100vh - (65px))] no-scrollbar">
+          {templates.map((templateObj, index) => (
+            <Template
+              title={templateObj.title}
+              summary={templateObj.summary}
+              lastTrained={templateObj.lastTrained.seconds}
+              index={index}
+              key={index}
+              setCurrentTemplate={setCurrentTemplate}
+            />
+          ))}
+        </div>
+      )}
+    </>
   );
 }
