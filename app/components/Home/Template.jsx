@@ -1,10 +1,19 @@
 "use client";
-export default function Template({ title, summary, lastTrained }) {
+export default function Template({
+  title,
+  summary,
+  lastTrained,
+  setCurrentTemplate,
+  index,
+}) {
   return (
     <>
       <div
         className="card w-44 h-40 md:h-52 lg:w-96 md:w-80 sm:w-72 bg-base-200 border-gray-500 border-2 overflow-scroll no-scrollbar"
-        onClick={() => console.log("a")}
+        onClick={() => {
+          setCurrentTemplate(index);
+          document.getElementById("workout-routing-modal").showModal();
+        }}
       >
         <div className="card-body p-3">
           <div className="flex justify-between">
