@@ -1,19 +1,10 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Cookies from "js-cookie";
-import { useEffect } from "react";
 
 export default function BottomNav() {
-  const user = Cookies.get("user_id");
   const path = usePathname();
-  useEffect(() => {
-    if (user !== undefined) return;
-    const btns = document.querySelectorAll(".btm-nav a");
-    for (let i = 0; i < btns.length; i++) {
-      btns[i].classList.add("disabled");
-    }
-  });
+
   return (
     <div className={`btm-nav bg-base-200 sm:hidden`}>
       <Link

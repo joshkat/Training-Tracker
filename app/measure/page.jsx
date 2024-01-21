@@ -1,5 +1,3 @@
-import IsLoggedIn from "../utils/IsLoggedIn";
-
 export const metadata = {
   title: "Measure",
   description: "Measurements Page",
@@ -8,7 +6,6 @@ export const metadata = {
 export default function Measure() {
   return (
     <>
-      <IsLoggedIn />
       <div>Measure</div>
     </>
   );

@@ -1,5 +1,4 @@
 "use client";
-import IsLoggedIn from "./utils/IsLoggedIn";
 import TemplateView from "./components/Home/TemplateView";
 import WorkoutRoutine from "./components/Home/WorkoutRoutine";
 
@@ -34,7 +33,6 @@ export default function Home() {
 
   return (
     <>
-      <IsLoggedIn />
       <AddTemplate templates={templates} setTemplates={setTemplates} />
       <TemplateView
         templates={templates}
