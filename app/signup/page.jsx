@@ -1,7 +1,8 @@
 "use client";
 
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { firebaseAuth } from "../utils/firebaseInit";
+import { doc, setDoc } from "firebase/firestore";
+import { firebaseAuth, db } from "../utils/firebaseInit";
 import Cookies from "js-cookie";
 import Link from "next/link";
 
@@ -15,7 +16,7 @@ export default function SignUp() {
       alert("Enter an email!");
       return;
     }
-    if (password != confirmed_password) {
+    if (password !== confirmed_password) {
       alert("Your passwords don't match");
       return;
     }
@@ -26,11 +27,23 @@ export default function SignUp() {
 
     createUserWithEmailAndPassword(firebaseAuth, email, password)
       .then(userCredential => {
-        //signed up
+        // Signed up
         const user = userCredential.user;
         console.log(user);
         Cookies.set("user_id", user.uid);
-        window.location = "/";
+
+        // Create a user document in Firestore with an empty templates array
+        const userDocRef = doc(db, "users", user.uid);
+        setDoc(userDocRef, {
+          templates: [],
+        })
+          .then(() => {
+            console.log("User document created successfully");
+            window.location = "/";
+          })
+          .catch(error => {
+            console.error("Error creating user document: ", error);
+          });
       })
       .catch(error => {
         const errorCode = error.code;

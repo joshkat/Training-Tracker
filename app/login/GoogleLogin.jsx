@@ -1,7 +1,8 @@
 "use client";
 
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { firebaseAuth } from "../utils/firebaseInit";
+import { doc, setDoc, getDoc } from "firebase/firestore";
+import { db, firebaseAuth } from "../utils/firebaseInit";
 import Image from "next/image";
 import Cookies from "js-cookie";
 
@@ -11,7 +12,21 @@ export default function GoogleLogin() {
 
     try {
       const userCred = await signInWithPopup(firebaseAuth, provider);
-      Cookies.set("user_id", userCred.user.uid);
+      const user = userCred.user;
+      Cookies.set("user_id", user.uid);
+
+      // Check if the user document exists and create it if it doesn't
+      const userDocRef = doc(db, "users", user.uid);
+      const userDocSnap = await getDoc(userDocRef);
+
+      if (!userDocSnap.exists()) {
+        // Document does not exist, create it with an empty templates array
+        await setDoc(userDocRef, {
+          templates: [],
+        });
+      }
+
+      // Redirect to home page after sign in and document creation/check
       window.location = "/";
     } catch (err) {
       console.error(err);

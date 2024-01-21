@@ -1,12 +1,12 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { getAuth, signOut } from "firebase/auth";
 import {
-  collection,
   doc,
   getDoc,
-  getDocs,
   getFirestore,
+  updateDoc,
+  arrayUnion,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -47,4 +47,28 @@ async function getUserTemplates() {
   }
 }
 
-export { firebaseApp, firebaseAuth, logout, getUserTemplates };
+async function addTemplateToUser(newTemplate) {
+  const userId = firebaseAuth.currentUser.uid;
+  // Reference to the user's document
+  const userDocRef = doc(db, "users", userId);
+
+  try {
+    // Update the user's `templates` array
+    await updateDoc(userDocRef, {
+      templates: arrayUnion(newTemplate),
+    });
+
+    console.log("Success");
+  } catch (error) {
+    console.error("Error adding template: ", error);
+  }
+}
+
+export {
+  firebaseApp,
+  firebaseAuth,
+  db,
+  logout,
+  getUserTemplates,
+  addTemplateToUser,
+};

@@ -6,6 +6,7 @@ import WorkoutRoutine from "./components/Home/WorkoutRoutine";
 import { useState, useEffect } from "react";
 import { firebaseAuth, getUserTemplates } from "./utils/firebaseInit";
 import { onAuthStateChanged } from "firebase/auth";
+import AddTemplate from "./components/Home/AddTemplate";
 
 export default function Home() {
   const [workoutsProp, setWorkoutsProp] = useState([
@@ -34,6 +35,7 @@ export default function Home() {
   return (
     <>
       <IsLoggedIn />
+      <AddTemplate templates={templates} setTemplates={setTemplates} />
       <TemplateView
         templates={templates}
         setCurrentTemplate={setCurrentTemplate}
