@@ -1,42 +1,5 @@
-import { addTemplateToUser } from "@/app/utils/firebaseInit";
-import { v4 as uuidv4 } from "uuid";
+import { handleAddTemplate } from "./helper/handleAddTemplate";
 export default function AddTemplate({ templates, setTemplates }) {
-  function convertToUnix() {
-    const date = new Date();
-    const milliseconds = date.getTime();
-    const seconds = Math.floor(milliseconds / 1000);
-    const nanoseconds = (milliseconds % 1000) * 1e6;
-
-    return { nanoseconds, seconds };
-  }
-
-  async function handleAddTemplate() {
-    const title = document.querySelector("#add-template-modal input").value;
-    const summary = document.querySelectorAll("#add-template-modal textarea")[0]
-      .value;
-    const workoutList = document
-      .querySelectorAll("#add-template-modal textarea")[1]
-      .value.split(",");
-    const uuid = uuidv4();
-    const lastTrained = convertToUnix();
-    const newTemplate = {
-      id: uuid,
-      lastTrained: lastTrained,
-      summary: summary,
-      title: title,
-    };
-    const tempTemplates = [...templates, newTemplate];
-
-    setTemplates(null);
-    addTemplateToUser(newTemplate, workoutList)
-      .then(() => {
-        setTemplates(tempTemplates); // once template added set it on frontend as well
-      })
-      .catch(() => {
-        console.error("Something didn't go to plan");
-      });
-  }
-
   function clearModal() {
     document.querySelector("#add-template-modal input").value = "";
     document.querySelectorAll("#add-template-modal textarea")[0].value = "";
@@ -78,7 +41,10 @@ export default function AddTemplate({ templates, setTemplates }) {
             <form method="dialog">
               <button
                 className="btn btn-success btn-sm"
-                onClick={handleAddTemplate}
+                onClick={() => {
+                  handleAddTemplate(templates, setTemplates);
+                  clearModal();
+                }}
               >
                 Add
               </button>

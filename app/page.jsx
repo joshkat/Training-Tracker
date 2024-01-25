@@ -37,6 +37,7 @@ export default function Home() {
       <TemplateView
         templates={templates}
         setCurrentTemplate={setCurrentTemplate}
+        setTemplates={setTemplates}
       />
       <WorkoutRoutine
         currentTemplate={currentTemplate}

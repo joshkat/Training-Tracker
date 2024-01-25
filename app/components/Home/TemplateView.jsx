@@ -1,5 +1,9 @@
 import Template from "./Template";
-export default function TemplateView({ templates, setCurrentTemplate }) {
+export default function TemplateView({
+  templates,
+  setCurrentTemplate,
+  setTemplates,
+}) {
   return (
     // adjust the second value in the height calc depending on what other things are added to home
     <>
@@ -12,9 +16,10 @@ export default function TemplateView({ templates, setCurrentTemplate }) {
               title={templateObj.title}
               summary={templateObj.summary}
               lastTrained={templateObj.lastTrained.seconds}
-              index={templateObj.id}
+              id={templateObj.id}
               key={templateObj.id}
               setCurrentTemplate={setCurrentTemplate}
+              setTemplates={setTemplates}
             />
           ))}
         </div>

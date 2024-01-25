@@ -7,6 +7,7 @@ import {
   getFirestore,
   updateDoc,
   arrayUnion,
+  arrayRemove,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -47,7 +48,7 @@ async function getUserTemplates() {
   }
 }
 
-async function addTemplateToUser(newTemplate) {
+async function addTemplate(newTemplate) {
   const userId = firebaseAuth.currentUser.uid;
   // Reference to the user's document
   const userDocRef = doc(db, "users", userId);
@@ -64,11 +65,33 @@ async function addTemplateToUser(newTemplate) {
   }
 }
 
+async function deleteTemplate(templateId) {
+  const userId = firebaseAuth.currentUser.uid;
+  const userDocRef = doc(db, "users", userId);
+  const templates = await getUserTemplates();
+  const templateToRemove = templates.filter(obj => obj.id === templateId)[0];
+
+  console.log(templateToRemove, "these are the temp from deleteTemp");
+
+  try {
+    await updateDoc(userDocRef, {
+      templates: arrayRemove(templateToRemove),
+    });
+    console.log(`shouldve deleted template with id of ${templateId}`);
+  } catch (error) {
+    console.error(`Error removing template template ${templateId}
+    Here is the error generated:
+    ${error}
+    `);
+  }
+}
+
 export {
   firebaseApp,
   firebaseAuth,
   db,
   logout,
   getUserTemplates,
-  addTemplateToUser,
+  addTemplate,
+  deleteTemplate,
 };

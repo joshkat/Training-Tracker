@@ -1,46 +1,23 @@
 "use client";
+
+import { deleteTemplate } from "@/app/utils/firebaseInit";
+import { formatDate } from "./helper/formatDate";
+import { handleDeleteTemplate } from "./helper/handleDeleteTemplate";
+
 export default function Template({
   title,
   summary,
   lastTrained,
   setCurrentTemplate,
-  index,
+  id,
+  setTemplates,
 }) {
-  function formatDate() {
-    const date = new Date(lastTrained * 1000); // converts unix seconds to date
-    const now = new Date();
-    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    const dateToday = new Date(
-      date.getFullYear(),
-      date.getMonth(),
-      date.getDate(),
-    );
-    const oneDay = 24 * 60 * 60 * 1000; // milliseconds in a day
-    const daysAgo = Math.round((today - dateToday) / oneDay);
-
-    if (daysAgo === 0) {
-      return "today";
-    } else if (daysAgo < 30) {
-      return `${daysAgo} days ago`;
-    } else if (date.getFullYear() === now.getFullYear()) {
-      return date.toLocaleDateString("en-US", {
-        month: "long",
-        day: "numeric",
-      });
-    } else {
-      return date.toLocaleDateString("en-US", {
-        month: "long",
-        day: "numeric",
-        year: "numeric",
-      });
-    }
-  }
   return (
     <>
       <div
         className="card w-44 h-40 md:h-52 lg:w-96 md:w-80 sm:w-72 bg-base-200 border-gray-500 border-2 overflow-scroll no-scrollbar"
         onClick={() => {
-          setCurrentTemplate(index);
+          setCurrentTemplate(id);
           document.getElementById("workout-routing-modal").showModal();
         }}
       >
@@ -67,7 +44,9 @@ export default function Template({
                   <a>Rename</a>
                 </li>
                 <li>
-                  <a>Delete</a>
+                  <a onClick={() => handleDeleteTemplate(id, setTemplates)}>
+                    Delete
+                  </a>
                 </li>
               </ul>
             </details>
@@ -76,7 +55,7 @@ export default function Template({
             {summary}
           </p>
           <p className="text-xs h-1">
-            🕑 <i>{formatDate()}</i>
+            🕑 <i>{formatDate(lastTrained)}</i>
           </p>
         </div>
       </div>
