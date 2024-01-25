@@ -1,7 +1,7 @@
 "use client";
 
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { firebaseAuth } from "../utils/firebaseInit";
+import { auth } from "../utils/firebaseInit";
 import Cookies from "js-cookie";
 
 export default function EmailForm() {
@@ -11,7 +11,7 @@ export default function EmailForm() {
     const password = e.target[1].value;
 
     if (email !== "" && password !== "") {
-      signInWithEmailAndPassword(firebaseAuth, email, password)
+      signInWithEmailAndPassword(auth, email, password)
         .then(userCredential => {
           const user = userCredential.user;
           Cookies.set("user_id", user.uid);

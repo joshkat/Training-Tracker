@@ -3,7 +3,8 @@ import TemplateView from "./components/Home/TemplateView";
 import WorkoutRoutine from "./components/Home/WorkoutRoutine";
 
 import { useState, useEffect } from "react";
-import { firebaseAuth, getUserTemplates } from "./utils/firebaseInit";
+import { auth } from "./utils/firebaseInit";
+import { getUserTemplates } from "./utils/firebase/getUserTemplates";
 import { onAuthStateChanged } from "firebase/auth";
 import AddTemplate from "./components/Home/AddTemplate";
 
@@ -16,7 +17,7 @@ export default function Home() {
   const [templates, setTemplates] = useState(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(firebaseAuth, async user => {
+    const unsubscribe = onAuthStateChanged(auth, async user => {
       if (user) {
         const userTemplates = await getUserTemplates();
         setTemplates(userTemplates);

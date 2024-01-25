@@ -2,7 +2,7 @@
 
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { doc, setDoc, getDoc } from "firebase/firestore";
-import { db, firebaseAuth } from "../utils/firebaseInit";
+import { db, auth } from "../utils/firebaseInit";
 import Image from "next/image";
 import Cookies from "js-cookie";
 
@@ -11,7 +11,7 @@ export default function GoogleLogin() {
     const provider = new GoogleAuthProvider();
 
     try {
-      const userCred = await signInWithPopup(firebaseAuth, provider);
+      const userCred = await signInWithPopup(auth, provider);
       const user = userCred.user;
       Cookies.set("user_id", user.uid);
 

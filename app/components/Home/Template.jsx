@@ -1,6 +1,5 @@
 "use client";
 
-import { deleteTemplate } from "@/app/utils/firebaseInit";
 import { formatDate } from "./helper/formatDate";
 import { handleDeleteTemplate } from "./helper/handleDeleteTemplate";
 

@@ -1,4 +1,5 @@
-import { deleteTemplate, getUserTemplates } from "@/app/utils/firebaseInit";
+import { getUserTemplates } from "@/app/utils/firebase/getUserTemplates";
+import { deleteTemplate } from "@/app/utils/firebase/deleteTemplate";
 
 async function handleDeleteTemplate(id, setTemplates) {
   setTemplates(null);

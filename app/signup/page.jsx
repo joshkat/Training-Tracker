@@ -2,7 +2,7 @@
 
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
-import { firebaseAuth, db } from "../utils/firebaseInit";
+import { auth, db } from "../utils/firebaseInit";
 import Cookies from "js-cookie";
 import Link from "next/link";
 
@@ -25,7 +25,7 @@ export default function SignUp() {
       return;
     }
 
-    createUserWithEmailAndPassword(firebaseAuth, email, password)
+    createUserWithEmailAndPassword(auth, email, password)
       .then(userCredential => {
         // Signed up
         const user = userCredential.user;

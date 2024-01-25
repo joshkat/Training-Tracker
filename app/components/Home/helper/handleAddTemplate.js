@@ -1,4 +1,4 @@
-import { addTemplate } from "@/app/utils/firebaseInit";
+import { addTemplate } from "@/app/utils/firebase/addTemplate";
 import { v4 as uuidv4 } from "uuid";
 
 async function handleAddTemplate(templates, setTemplates) {
