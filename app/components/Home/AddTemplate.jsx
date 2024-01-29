@@ -9,7 +9,9 @@ export default function AddTemplate({ templates, setTemplates }) {
     <div className="flex justify-between ml-5 mr-5">
       <h2 className="text-xl font-bold">Templates</h2>
       <button
-        className={`btn btn-sm ${templates === null ? "btn-disabled" : ""}`}
+        className={`btn btn-sm ${
+          templates === null ? "btn-disabled" : ""
+        } to-disable`}
         onClick={() => {
           document.getElementById("add-template-modal").showModal();
         }}

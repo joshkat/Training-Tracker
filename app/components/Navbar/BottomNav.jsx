@@ -10,7 +10,7 @@ export default function BottomNav() {
       <Link
         href="workouts"
         id="workouts"
-        className={path === "/workouts" ? "active" : ""}
+        className={path === "/workouts" ? "active" : "to-disable"}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -28,7 +28,7 @@ export default function BottomNav() {
         </svg>
         <span className="btm-nav-label">Workouts</span>
       </Link>
-      <Link href="/" className={path === "/" ? "active" : ""}>
+      <Link href="/" className={path === "/" ? "active" : "to-disable"}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-5 w-5"
@@ -45,7 +45,10 @@ export default function BottomNav() {
         </svg>
         <span className="btm-nav-label">Home</span>
       </Link>
-      <Link href="/measure" className={path === "/measure" ? "active" : ""}>
+      <Link
+        href="/measure"
+        className={path === "/measure" ? "active" : "to-disable"}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-5 w-5"

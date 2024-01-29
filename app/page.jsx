@@ -4,19 +4,24 @@ import WorkoutRoutine from "./components/Home/WorkoutRoutine";
 import AddTemplate from "./components/Home/AddTemplate";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+
 import { getUserTemplates } from "./utils/firebase/getUserTemplates";
 import { getTemplate } from "./utils/firebase/getTemplate";
 import { isUserSignedIn } from "./utils/firebase/isUserSignedIn";
+import { disableButtons } from "./utils/disableButtons";
 
 export default function Home() {
   const [workoutsProp, setWorkoutsProp] = useState([]);
   const [currentTemplate, setCurrentTemplate] = useState(null);
   const [templates, setTemplates] = useState(null);
+  const router = useRouter();
 
   async function handleLoad() {
     const signedIn = await isUserSignedIn();
     if (signedIn === false) {
-      window.location = "/login";
+      disableButtons();
+      router.push("/login");
       return;
     }
     const userTemplates = await getUserTemplates();
