@@ -3,7 +3,6 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../utils/firebaseInit";
-import Cookies from "js-cookie";
 import Link from "next/link";
 
 export default function SignUp() {
@@ -29,8 +28,6 @@ export default function SignUp() {
       .then(userCredential => {
         // Signed up
         const user = userCredential.user;
-        console.log(user);
-        Cookies.set("user_id", user.uid);
 
         // Create a user document in Firestore with an empty templates array
         const userDocRef = doc(db, "users", user.uid);

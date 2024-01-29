@@ -4,7 +4,6 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { db, auth } from "../utils/firebaseInit";
 import Image from "next/image";
-import Cookies from "js-cookie";
 
 export default function GoogleLogin() {
   async function handleLogin() {
@@ -13,7 +12,6 @@ export default function GoogleLogin() {
     try {
       const userCred = await signInWithPopup(auth, provider);
       const user = userCred.user;
-      Cookies.set("user_id", user.uid);
 
       // Check if the user document exists and create it if it doesn't
       const userDocRef = doc(db, "users", user.uid);

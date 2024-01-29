@@ -2,7 +2,6 @@
 
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../utils/firebaseInit";
-import Cookies from "js-cookie";
 
 export default function EmailForm() {
   function loginHandler(e) {
@@ -14,7 +13,6 @@ export default function EmailForm() {
       signInWithEmailAndPassword(auth, email, password)
         .then(userCredential => {
           const user = userCredential.user;
-          Cookies.set("user_id", user.uid);
           window.location = "/";
         })
         .catch(error => {

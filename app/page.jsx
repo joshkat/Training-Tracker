@@ -4,30 +4,27 @@ import WorkoutRoutine from "./components/Home/WorkoutRoutine";
 import AddTemplate from "./components/Home/AddTemplate";
 
 import { useState, useEffect } from "react";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./utils/firebaseInit";
 import { getUserTemplates } from "./utils/firebase/getUserTemplates";
 import { getTemplate } from "./utils/firebase/getTemplate";
+import { isUserSignedIn } from "./utils/firebase/isUserSignedIn";
 
 export default function Home() {
   const [workoutsProp, setWorkoutsProp] = useState([]);
   const [currentTemplate, setCurrentTemplate] = useState(null);
   const [templates, setTemplates] = useState(null);
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async user => {
-      if (user) {
-        const userTemplates = await getUserTemplates();
-        setTemplates(userTemplates);
-        console.log(userTemplates, "these should be the templates");
-      } else {
-        // User is signed out, clear templates
-        setTemplates([]);
-      }
-    });
+  async function handleLoad() {
+    const signedIn = await isUserSignedIn();
+    if (signedIn === false) {
+      window.location = "/login";
+      return;
+    }
+    const userTemplates = await getUserTemplates();
+    setTemplates(userTemplates);
+  }
 
-    // Cleanup subscription on unmount
-    return () => unsubscribe();
+  useEffect(() => {
+    handleLoad();
   }, []); // Empty dependency array ensures this effect only runs once on mount
 
   useEffect(() => {
