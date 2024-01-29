@@ -1,7 +1,12 @@
 import { auth, db } from "../firebaseInit";
-import { doc, updateDoc, arrayUnion } from "firebase/firestore";
+import { doc, updateDoc, arrayUnion, setDoc } from "firebase/firestore";
 
-async function addTemplate(newTemplate) {
+async function addTemplate(newTemplate, workoutList) {
+  await addToUsersList(newTemplate);
+  await addToTemplatesDoc(newTemplate.id, workoutList);
+}
+
+async function addToUsersList(newTemplate) {
   const userId = auth.currentUser.uid;
   // Reference to the user's document
   const userDocRef = doc(db, "users", userId);
@@ -11,10 +16,26 @@ async function addTemplate(newTemplate) {
     await updateDoc(userDocRef, {
       templates: arrayUnion(newTemplate),
     });
-
-    console.log("Success");
   } catch (error) {
-    console.error("Error adding template: ", error);
+    console.error("Error at addToUsersList: ", error);
+  }
+}
+
+async function addToTemplatesDoc(id, workoutList) {
+  const templateList = workoutList.map(workout => {
+    return {
+      name: workout,
+      notes: "",
+      sets: {
+        lbs: 0,
+        reps: 0,
+      },
+    };
+  });
+  try {
+    await setDoc(doc(db, "user_templates", id), { template: templateList });
+  } catch (error) {
+    console.error("Error at addToTemplatesDoc: ", error);
   }
 }
 
