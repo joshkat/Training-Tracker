@@ -1,18 +1,16 @@
 "use client";
 import TemplateView from "./components/Home/TemplateView";
 import WorkoutRoutine from "./components/Home/WorkoutRoutine";
-
-import { useState, useEffect } from "react";
-import { auth } from "./utils/firebaseInit";
-import { getUserTemplates } from "./utils/firebase/getUserTemplates";
-import { onAuthStateChanged } from "firebase/auth";
 import AddTemplate from "./components/Home/AddTemplate";
 
+import { useState, useEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./utils/firebaseInit";
+import { getUserTemplates } from "./utils/firebase/getUserTemplates";
+import { getTemplate } from "./utils/firebase/getTemplate";
+
 export default function Home() {
-  const [workoutsProp, setWorkoutsProp] = useState([
-    { name: "workout a", sets: [{ lbs: 5, reps: 3 }, {}], notes: "notes on a" },
-    { name: "workout b", sets: [{}, {}], notes: "notes on b" },
-  ]);
+  const [workoutsProp, setWorkoutsProp] = useState([]);
   const [currentTemplate, setCurrentTemplate] = useState(null);
   const [templates, setTemplates] = useState(null);
 
@@ -31,6 +29,12 @@ export default function Home() {
     // Cleanup subscription on unmount
     return () => unsubscribe();
   }, []); // Empty dependency array ensures this effect only runs once on mount
+
+  useEffect(() => {
+    if (currentTemplate !== null) {
+      getTemplate(currentTemplate, setWorkoutsProp);
+    }
+  }, [currentTemplate]);
 
   return (
     <>

@@ -26,10 +26,12 @@ async function addToTemplatesDoc(id, workoutList) {
     return {
       name: workout,
       notes: "",
-      sets: {
-        lbs: 0,
-        reps: 0,
-      },
+      sets: [
+        {
+          lbs: 0,
+          reps: 0,
+        },
+      ],
     };
   });
   try {
