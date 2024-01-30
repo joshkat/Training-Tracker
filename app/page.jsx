@@ -48,6 +48,7 @@ export default function Home() {
       />
       <WorkoutRoutine
         currentTemplate={currentTemplate}
+        setCurrentTemplate={setCurrentTemplate}
         workouts={workoutsProp}
         setWorkoutsProp={setWorkoutsProp}
       />
