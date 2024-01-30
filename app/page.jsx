@@ -17,6 +17,9 @@ export default function Home() {
   const [templates, setTemplates] = useState(null);
   const router = useRouter();
 
+  const [count, setCount] = useState(0);
+  const [isActive, setIsActive] = useState(false);
+
   async function handleLoad() {
     const signedIn = await isUserSignedIn();
     if (signedIn === false) {
@@ -30,7 +33,8 @@ export default function Home() {
 
   useEffect(() => {
     handleLoad();
-  }, []); // Empty dependency array ensures this effect only runs once on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (currentTemplate !== null) {
@@ -45,12 +49,17 @@ export default function Home() {
         templates={templates}
         setCurrentTemplate={setCurrentTemplate}
         setTemplates={setTemplates}
+        setIsActive={setIsActive}
       />
       <WorkoutRoutine
         currentTemplate={currentTemplate}
         setCurrentTemplate={setCurrentTemplate}
         workouts={workoutsProp}
         setWorkoutsProp={setWorkoutsProp}
+        count={count}
+        setCount={setCount}
+        isActive={isActive}
+        setIsActive={setIsActive}
       />
     </>
   );

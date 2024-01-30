@@ -3,6 +3,7 @@ export default function TemplateView({
   templates,
   setCurrentTemplate,
   setTemplates,
+  setIsActive,
 }) {
   return (
     // adjust the second value in the height calc depending on what other things are added to home
@@ -20,6 +21,7 @@ export default function TemplateView({
               key={templateObj.id}
               setCurrentTemplate={setCurrentTemplate}
               setTemplates={setTemplates}
+              setIsActive={setIsActive}
             />
           ))}
         </div>

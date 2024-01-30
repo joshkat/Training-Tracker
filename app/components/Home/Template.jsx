@@ -10,6 +10,7 @@ export default function Template({
   setCurrentTemplate,
   id,
   setTemplates,
+  setIsActive,
 }) {
   return (
     <>
@@ -18,6 +19,7 @@ export default function Template({
         onClick={() => {
           setCurrentTemplate(id);
           document.getElementById("workout-routing-modal").showModal();
+          setIsActive(true);
         }}
       >
         <div className="card-body p-3">

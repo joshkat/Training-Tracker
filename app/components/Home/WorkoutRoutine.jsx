@@ -1,10 +1,15 @@
-"use client";
+import Counter from "./Counter";
 import Workout from "./Workout";
+
 export default function WorkoutRoutine({
   currentTemplate,
   setCurrentTemplate,
   workouts,
   setWorkoutsProp,
+  count,
+  setCount,
+  isActive,
+  setIsActive,
 }) {
   // workouts will be an array made up of objects of form {name:"", sets:[], notes:""}
   const updateWorkoutSets = (workoutIndex, newSets) => {
@@ -45,17 +50,31 @@ export default function WorkoutRoutine({
   return (
     <dialog id="workout-routing-modal" className="modal modal-bottom">
       <div className="modal-box w-screen h-screen">
-        <form method="dialog">
-          {/* if there is a button in form, it will close the modal */}
-          <button
-            className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-            onClick={() => {
-              setCurrentTemplate(null);
-              setWorkoutsProp([]);
-            }}
-          >
-            ✕
-          </button>
+        <form method="dialog" className="flex justify-between">
+          <Counter count={count} setCount={setCount} isActive={isActive} />
+          <div>
+            <button
+              className="btn btn-sm btn-info mr-2"
+              onClick={() => {
+                setCurrentTemplate(null);
+                setIsActive(false);
+                setCount(0);
+              }}
+            >
+              Finish
+            </button>
+            <button
+              className="btn btn-sm btn-error"
+              onClick={() => {
+                setCurrentTemplate(null);
+                setWorkoutsProp([]);
+                setIsActive(false);
+                setCount(0);
+              }}
+            >
+              Cancel
+            </button>
+          </div>
         </form>
 
         {workouts.length === 0 ? (
