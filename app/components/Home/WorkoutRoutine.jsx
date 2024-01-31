@@ -81,60 +81,62 @@ export default function WorkoutRoutine({
                 }
               />
             ))}
-            <div className="flex-grow">
-              <button
-                className="btn btn-info btn-sm w-full"
-                onClick={() =>
-                  document.getElementById("add_exercise_btn").showModal()
-                }
-              >
-                Add Exercise
-              </button>
-              <dialog id="add_exercise_btn" className="modal">
-                <div className="modal-box rounded-lg w-4/5 flex flex-col items-center">
-                  <h3 className="font-bold text-lg">
-                    What is the name of this new workout?
-                  </h3>
-                  <input
-                    type="text"
-                    id="add-exercise-input"
-                    className="input input-sm input-bordered mt-2"
-                  />
-                  <div className="modal-action w-full">
-                    <form
-                      method="dialog"
-                      className="flex w-full justify-evenly"
-                    >
-                      <button
-                        className="btn btn-success btn-sm flex-grow"
-                        onClick={e => {
-                          const workoutName =
-                            document.getElementById("add-exercise-input").value;
-                          addWorkout(workoutName, workouts, setWorkoutsProp);
-                          document.getElementById("add-exercise-input").value =
-                            "";
-                        }}
-                      >
-                        Add Workout
-                      </button>
-                      <div className="divider divider-horizontal"></div>
-                      <button
-                        className="btn btn-error btn-sm flex-grow"
-                        onClick={e => {
-                          document.getElementById("add-exercise-input").value =
-                            "";
-                        }}
-                      >
-                        Cancel
-                      </button>
-                    </form>
-                  </div>
-                </div>
-              </dialog>
-            </div>
           </>
         )}
+        <AddWorkoutModal
+          workouts={workouts}
+          setWorkoutsProp={setWorkoutsProp}
+        />
       </div>
     </dialog>
+  );
+}
+
+function AddWorkoutModal({ workouts, setWorkoutsProp }) {
+  return (
+    <div className="flex-grow">
+      <button
+        className="btn btn-info btn-sm w-full"
+        onClick={() => document.getElementById("add_exercise_btn").showModal()}
+      >
+        Add Exercise
+      </button>
+      <dialog id="add_exercise_btn" className="modal">
+        <div className="modal-box rounded-lg w-4/5 flex flex-col items-center">
+          <h3 className="font-bold text-lg">
+            What is the name of this new workout?
+          </h3>
+          <input
+            type="text"
+            id="add-exercise-input"
+            className="input input-sm input-bordered mt-2"
+          />
+          <div className="modal-action w-full">
+            <form method="dialog" className="flex w-full justify-evenly">
+              <button
+                className="btn btn-success btn-sm flex-grow"
+                onClick={e => {
+                  const workoutName =
+                    document.getElementById("add-exercise-input").value;
+                  addWorkout(workoutName, workouts, setWorkoutsProp);
+                  document.getElementById("add-exercise-input").value = "";
+                }}
+              >
+                Add Workout
+              </button>
+              <div className="divider divider-horizontal"></div>
+              <button
+                className="btn btn-error btn-sm flex-grow"
+                onClick={e => {
+                  document.getElementById("add-exercise-input").value = "";
+                }}
+              >
+                Cancel
+              </button>
+            </form>
+          </div>
+        </div>
+      </dialog>
+    </div>
   );
 }
