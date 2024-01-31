@@ -1,5 +1,12 @@
 import Counter from "./Counter";
 import Workout from "./Workout";
+import Error from "../Error";
+import {
+  updateWorkoutNotes,
+  updateWorkoutSets,
+  addWorkout,
+  removeWorkout,
+} from "./helper/updateWorkout";
 
 export default function WorkoutRoutine({
   currentTemplate,
@@ -11,44 +18,14 @@ export default function WorkoutRoutine({
   isActive,
   setIsActive,
 }) {
-  // workouts will be an array made up of objects of form {name:"", sets:[], notes:""}
-  const updateWorkoutSets = (workoutIndex, newSets) => {
-    const updatedWorkouts = [...workouts];
-    updatedWorkouts[workoutIndex] = {
-      ...updatedWorkouts[workoutIndex],
-      sets: newSets,
-    };
-    setWorkoutsProp(updatedWorkouts);
-  };
-
-  const updateWorkoutNotes = (workoutIndex, newNotes) => {
-    const updatedWorkouts = [...workouts];
-    updatedWorkouts[workoutIndex] = {
-      ...updatedWorkouts[workoutIndex],
-      notes: newNotes,
-    };
-    setWorkoutsProp(updatedWorkouts);
-  };
-
-  const addWorkout = workoutName => {
-    const updatedWorkouts = [...workouts];
-    updatedWorkouts.push({
-      name: workoutName,
-      sets: [],
-      notes: "",
-    });
-    setWorkoutsProp(updatedWorkouts);
-  };
-
-  const removeWorkout = workoutIndex => {
-    const updatedWorkouts = workouts.filter(
-      (_, index) => index !== workoutIndex,
-    );
-    setWorkoutsProp(updatedWorkouts);
-  };
-
   return (
     <dialog id="workout-routing-modal" className="modal modal-bottom">
+      <div className="absolute z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-[555px]">
+        <Error
+          errorText={"You need to have at least one workout per routine!!"}
+          id={"one_workout_per_routine"}
+        />
+      </div>
       <div className="modal-box w-screen h-screen">
         <form method="dialog" className="flex justify-between">
           <Counter count={count} setCount={setCount} isActive={isActive} />
@@ -93,9 +70,15 @@ export default function WorkoutRoutine({
                 name={workoutsObj.name}
                 sets={workoutsObj.sets}
                 notes={workoutsObj.notes}
-                updateSets={newSets => updateWorkoutSets(index, newSets)}
-                updateNotes={newNotes => updateWorkoutNotes(index, newNotes)}
-                removeWorkout={() => removeWorkout(index)}
+                updateSets={newSets =>
+                  updateWorkoutSets(index, newSets, workouts, setWorkoutsProp)
+                }
+                updateNotes={newNotes =>
+                  updateWorkoutNotes(index, newNotes, workouts, setWorkoutsProp)
+                }
+                removeWorkout={() =>
+                  removeWorkout(index, workouts, setWorkoutsProp)
+                }
               />
             ))}
             <div className="flex-grow">
@@ -125,9 +108,9 @@ export default function WorkoutRoutine({
                       <button
                         className="btn btn-success btn-sm flex-grow"
                         onClick={e => {
-                          addWorkout(
-                            document.getElementById("add-exercise-input").value,
-                          );
+                          const workoutName =
+                            document.getElementById("add-exercise-input").value;
+                          addWorkout(workoutName, workouts, setWorkoutsProp);
                           document.getElementById("add-exercise-input").value =
                             "";
                         }}
