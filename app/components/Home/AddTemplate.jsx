@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { handleAddTemplate } from "./helper/handleAddTemplate";
+import Error from "../Error";
+import { ensureNonEmptyInputs } from "./helper/ensureNonEmptyInputs";
+
 export default function AddTemplate({ templates, setTemplates }) {
   return (
     <div className="flex justify-between ml-5 mr-5">
@@ -31,6 +34,18 @@ function AddTemplateModal({ templates, setTemplates }) {
 
   return (
     <dialog id="add-template-modal" className="modal">
+      <div className="absolute z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-[555px]">
+        <Error
+          errorText={
+            "You need to add at least one workout to create a routine!!"
+          }
+          id={"at_least_one_workout"}
+        />
+        <Error
+          errorText={"You need to have a name for your template!!"}
+          id={"name_required"}
+        />
+      </div>
       <div className="modal-box">
         <h3 className="font-bold text-lg">Create Template</h3>
         <p className="py-1">Enter template info below</p>
@@ -72,14 +87,16 @@ function AddTemplateModal({ templates, setTemplates }) {
           <form method="dialog">
             <button
               className="btn btn-success btn-sm"
-              onClick={() => {
-                handleAddTemplate(templates, setTemplates, [...workoutList]);
-                clearModal();
+              onClick={e => {
+                const canContinue = ensureNonEmptyInputs(e, workoutList);
+                if (canContinue) {
+                  handleAddTemplate(templates, setTemplates, [...workoutList]);
+                  clearModal();
+                }
               }}
             >
               Create
             </button>
-            {/* if there is a button in form, it will close the modal */}
             <button className="btn btn-error btn-sm" onClick={clearModal}>
               Close
             </button>
