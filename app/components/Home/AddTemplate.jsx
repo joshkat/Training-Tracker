@@ -72,6 +72,7 @@ function AddTemplateModal({ templates, setTemplates }) {
               onClick={() => {
                 const workoutName =
                   document.getElementById("workout_name").value;
+                if (workoutName === "") return;
                 const newList = new Set([...workoutList]);
                 newList.add(workoutName);
                 setWorkoutList(newList);
@@ -84,7 +85,7 @@ function AddTemplateModal({ templates, setTemplates }) {
           <WorkoutList list={workoutList} setList={setWorkoutList} />
         </div>
         <div className="modal-action">
-          <form method="dialog">
+          <form method="dialog" className="flex justify-end w-full gap-4">
             <button
               className="btn btn-success btn-sm"
               onClick={e => {
