@@ -1,10 +1,6 @@
+import { useState } from "react";
 import { handleAddTemplate } from "./helper/handleAddTemplate";
 export default function AddTemplate({ templates, setTemplates }) {
-  function clearModal() {
-    document.querySelector("#add-template-modal input").value = "";
-    document.querySelectorAll("#add-template-modal textarea")[0].value = "";
-    document.querySelectorAll("#add-template-modal textarea")[1].value = "";
-  }
   return (
     <div className="flex justify-between ml-5 mr-5">
       <h2 className="text-xl font-bold">Templates</h2>
@@ -18,46 +14,115 @@ export default function AddTemplate({ templates, setTemplates }) {
       >
         Add Template
       </button>
-      <dialog id="add-template-modal" className="modal">
-        <div className="modal-box">
-          <h3 className="font-bold text-lg">Create Template</h3>
-          <p className="py-1">Enter template info below</p>
-          <div>
+      <AddTemplateModal templates={templates} setTemplates={setTemplates} />
+    </div>
+  );
+}
+
+function AddTemplateModal({ templates, setTemplates }) {
+  const [workoutList, setWorkoutList] = useState(new Set());
+
+  function clearModal() {
+    document.querySelectorAll("#add-template-modal input")[0].value = "";
+    document.querySelectorAll("#add-template-modal input")[1].value = "";
+    document.querySelector("#add-template-modal textarea").value = "";
+    setWorkoutList(new Set());
+  }
+
+  return (
+    <dialog id="add-template-modal" className="modal">
+      <div className="modal-box">
+        <h3 className="font-bold text-lg">Create Template</h3>
+        <p className="py-1">Enter template info below</p>
+        <div>
+          <input
+            type="text"
+            className="input input-sm input-bordered w-full"
+            placeholder="Name"
+          />
+          <textarea
+            type="text"
+            className="input input-bordered mt-2 w-full"
+            placeholder="Summary"
+          />
+          <div className="join w-full mt-2 mb-2">
             <input
               type="text"
-              className="input input-sm input-bordered w-full"
-              placeholder="Name"
+              className="input input-sm input-bordered w-full join-item"
+              placeholder="Workout Name"
+              id="workout_name"
             />
-            <textarea
-              type="text"
-              className="input input-bordered mt-2 w-full"
-              placeholder="Summary"
-            />
-            <textarea
-              type="text"
-              className="input input-bordered mt-2 w-full h-32"
-              placeholder={`Comma seperated list of exercises\n(e.g. Flat Bench,Chest Flies,...)\nNot following this input style WILL cause weird behavior`}
-            />
+            <button
+              className="btn btn-sm join-item btn-success"
+              onClick={() => {
+                const workoutName =
+                  document.getElementById("workout_name").value;
+                const newList = new Set([...workoutList]);
+                newList.add(workoutName);
+                setWorkoutList(newList);
+                document.getElementById("workout_name").value = "";
+              }}
+            >
+              Add Workout
+            </button>
           </div>
-          <div className="modal-action">
-            <form method="dialog">
-              <button
-                className="btn btn-success btn-sm"
-                onClick={() => {
-                  handleAddTemplate(templates, setTemplates);
-                  clearModal();
-                }}
-              >
-                Add
-              </button>
-              {/* if there is a button in form, it will close the modal */}
-              <button className="btn btn-error btn-sm" onClick={clearModal}>
-                Close
-              </button>
-            </form>
-          </div>
+          <WorkoutList list={workoutList} setList={setWorkoutList} />
         </div>
-      </dialog>
+        <div className="modal-action">
+          <form method="dialog">
+            <button
+              className="btn btn-success btn-sm"
+              onClick={() => {
+                handleAddTemplate(templates, setTemplates, [...workoutList]);
+                clearModal();
+              }}
+            >
+              Create
+            </button>
+            {/* if there is a button in form, it will close the modal */}
+            <button className="btn btn-error btn-sm" onClick={clearModal}>
+              Close
+            </button>
+          </form>
+        </div>
+      </div>
+    </dialog>
+  );
+}
+
+function WorkoutList({ list, setList }) {
+  return (
+    <div className="collapse collapse-arrow bg-base-200 text-black">
+      <input type="checkbox" className="peer" defaultChecked />
+      <div className="collapse-title bg-info">Workout List</div>
+      <div className="collapse-content bg-info">
+        {list.size === 0 ? (
+          <h1 className="text-xl text-center">Your list is empty!!</h1>
+        ) : (
+          <ol className="list-decimal list-inside">
+            {[...list].map((value, index) => (
+              <li key={index} className="mb-2">
+                <span className="join">
+                  <span className="join-item pl-2 bg-white w-52 overflow-scroll flex items-center">
+                    {value}
+                  </span>
+                  <button
+                    className="join-item btn btn-sm"
+                    onClick={() => {
+                      const newList = new Set([...list]);
+                      newList.delete(value);
+                      console.log(newList);
+                      setList(newList);
+                    }}
+                  >
+                    ❌
+                  </button>
+                </span>
+              </li>
+            ))}
+          </ol>
+        )}
+      </div>
     </div>
   );
 }

@@ -1,13 +1,10 @@
 import { addTemplate } from "@/app/utils/firebase/addTemplate";
 import { v4 as uuidv4 } from "uuid";
 
-async function handleAddTemplate(templates, setTemplates) {
+async function handleAddTemplate(templates, setTemplates, workoutList) {
   const title = document.querySelector("#add-template-modal input").value;
   const summary = document.querySelectorAll("#add-template-modal textarea")[0]
     .value;
-  const workoutList = document
-    .querySelectorAll("#add-template-modal textarea")[1]
-    .value.split(",");
   const uuid = uuidv4();
   const lastTrained = convertToUnix();
   const newTemplate = {
