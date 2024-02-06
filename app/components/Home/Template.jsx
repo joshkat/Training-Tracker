@@ -31,10 +31,9 @@ export default function Template({
               className="dropdown dropdown-end"
               onClick={e => {
                 e.stopPropagation();
-                console.log("not a");
               }}
             >
-              <summary className="bg-info dark:bg-slate-800 w-8 rounded-lg text-center">
+              <summary className="bg-info w-8 rounded-lg text-center text-black">
                 •••
               </summary>
               <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box">
