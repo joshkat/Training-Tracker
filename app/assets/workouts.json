@@ -174,13 +174,6 @@
     ]
   },
   {
-    "name": "Push-press",
-    "bodyPart": "Quadriceps",
-    "imageURL": "/guide-7.gif",
-    "equipment": "Barbell",
-    "instructions": []
-  },
-  {
     "name": "Military press",
     "bodyPart": "Shoulders",
     "imageURL": "/guide-12.gif",
@@ -1238,13 +1231,6 @@
       "After a second pause, slowly come down back to the starting position as you inhale.",
       "Repeat for the recommended amount of repetitions and then switch arms."
     ]
-  },
-  {
-    "name": "Standing Dumbbell Triceps Extension",
-    "bodyPart": "Triceps",
-    "imageURL": "/guide-10.gif",
-    "equipment": "Dumbbell",
-    "instructions": []
   },
   {
     "name": "Bodyweight squat",
