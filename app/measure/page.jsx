@@ -40,6 +40,7 @@ export default function Measure() {
       }
     }
     handleLoad();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
