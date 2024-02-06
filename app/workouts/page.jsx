@@ -13,7 +13,7 @@ export default function Workouts() {
       <div className="absolute z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         <InfoPopup />
       </div>
-      <h1 className="text-xl lg:text-2xl font-bold mb-[1rem]">Workouts</h1>
+      <h1 className="text-xl lg:text-2xl font-bold my-[1rem]">Workouts</h1>
       {workouts.map((workoutObj, index) => (
         <WorkoutListItem
           workoutName={workoutObj.name}

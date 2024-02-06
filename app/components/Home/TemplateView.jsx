@@ -11,7 +11,8 @@ export default function TemplateView({
       {templates === null ? (
         <span className="loading loading-spinner w-24 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></span>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-4 justify-items-center overflow-scroll h-[calc(100vh-(97px+1rem))] mt-[1rem] no-scrollbar">
+        // extra .5 rem is from AddTemplate margin
+        <div className="grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-4 justify-items-center overflow-scroll h-[calc(100vh-(97px+1.5rem))] mt-[1rem] no-scrollbar">
           {templates.map(templateObj => (
             <Template
               title={templateObj.title}

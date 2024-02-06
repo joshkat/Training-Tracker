@@ -18,7 +18,7 @@ export default function WorkoutListItem({
               src={`/guide${imageURL}`}
               height={150}
               width={150}
-              alt=""
+              alt={`img_for_${imageURL}`}
             />
           </div>
           <div className="ml-10 w-full">
