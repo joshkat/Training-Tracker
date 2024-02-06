@@ -21,6 +21,26 @@ export default function GoogleLogin() {
         // Document does not exist, create it with an empty templates array
         await setDoc(userDocRef, {
           templates: [],
+          measurements: {
+            weight: -1,
+            bodyfat: -1,
+            kcal: -1,
+            neck: -1,
+            shoulders: -1,
+            chest: -1,
+            leftbicep: -1,
+            rightbicep: -1,
+            leftforearm: -1,
+            rightforearm: -1,
+            upperabs: -1,
+            waist: -1,
+            lowerabs: -1,
+            hips: -1,
+            rightthigh: -1,
+            leftthigh: -1,
+            leftcalf: -1,
+            rightcalf: -1,
+          },
         });
       }
 
