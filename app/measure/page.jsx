@@ -3,10 +3,11 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { isUserSignedIn } from "../utils/firebase/isUserSignedIn";
 import MeasureInput from "./MeasureInput";
+import { getMeasurements } from "../utils/firebase/getMeasurements";
 
 export default function Measure() {
   const generalInfo = ["Weight (lbs)", "Body Fat %", "Caloric Intake"];
-  const generalInfoId = ["weight", "bodyfat", "intake"];
+  const generalInfoId = ["weight", "bodyfat", "kcal"];
   const bodyParts = [
     "Neck",
     "Shoulders",
@@ -25,7 +26,7 @@ export default function Measure() {
     "Right Calf",
   ];
   const router = useRouter();
-  const [signedIn, setSignedIn] = useState(false);
+  const [measurements, setMeasurements] = useState(null);
 
   useEffect(() => {
     async function handleLoad() {
@@ -33,15 +34,17 @@ export default function Measure() {
       if (signedIn === false) {
         router.push("/login");
         return;
+      } else {
+        const measure = await getMeasurements();
+        setMeasurements(measure);
       }
-      setSignedIn(true);
     }
     handleLoad();
-  });
+  }, []);
 
   return (
     <>
-      {signedIn ? (
+      {measurements !== null ? (
         <div className="px-5 overflow-scroll h-[calc(100vh-65px)]  no-scrollbar">
           <h1 className="text-xl lg:text-2xl font-bold my-[1rem]">Workouts</h1>
           <h2 className="text-gray-500 font-bold">General Info</h2>
@@ -49,7 +52,11 @@ export default function Measure() {
             {generalInfo.map((value, index) => (
               <li key={index} className="flex mb-2">
                 <p className="flex-grow">{value}</p>
-                <MeasureInput id={generalInfoId[index]} />
+                <MeasureInput
+                  id={generalInfoId[index]}
+                  measurements={measurements}
+                  setMeasurements={setMeasurements}
+                />
               </li>
             ))}
           </ul>
@@ -59,7 +66,11 @@ export default function Measure() {
             {bodyParts.map((value, index) => (
               <li key={index} className="flex mb-2">
                 <p className="flex-grow">{value}</p>
-                <MeasureInput id={value.replace(/\s+/g, "").toLowerCase()} />
+                <MeasureInput
+                  id={value.replace(/\s+/g, "").toLowerCase()}
+                  measurements={measurements}
+                  setMeasurements={measurements}
+                />
               </li>
             ))}
           </ul>
