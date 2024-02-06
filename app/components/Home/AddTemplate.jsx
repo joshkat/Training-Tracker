@@ -6,7 +6,7 @@ import { ensureNonEmptyInputs } from "./helper/ensureNonEmptyInputs";
 export default function AddTemplate({ templates, setTemplates }) {
   return (
     <div className="flex justify-between ml-5 mr-5 mt-[.5rem]">
-      <h2 className="text-xl font-bold">Templates</h2>
+      <h2 className="text-xl lg:text-2xl font-bold">Templates</h2>
       <button
         className={`btn btn-sm ${
           templates === null ? "btn-disabled" : ""
