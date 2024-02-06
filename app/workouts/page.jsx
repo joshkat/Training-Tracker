@@ -1,6 +1,5 @@
-import WorkoutListItem from "./WorkoutListItem";
-import workouts from "../assets/workouts.json";
 import InfoPopup from "./InfoPopup";
+import WorkoutList from "./WorkoutList";
 
 export const metadata = {
   title: "Workouts",
@@ -14,16 +13,7 @@ export default function Workouts() {
         <InfoPopup />
       </div>
       <h1 className="text-xl lg:text-2xl font-bold my-[1rem]">Workouts</h1>
-      {workouts.map((workoutObj, index) => (
-        <WorkoutListItem
-          workoutName={workoutObj.name}
-          bodyPart={workoutObj.bodyPart}
-          imageURL={workoutObj.imageURL}
-          equipment={workoutObj.equipment}
-          instructions={workoutObj.instructions}
-          key={index}
-        />
-      ))}
+      <WorkoutList />
     </div>
   );
 }
