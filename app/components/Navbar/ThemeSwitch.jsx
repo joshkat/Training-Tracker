@@ -6,7 +6,8 @@ export default function ThemeSwitch() {
 
   useEffect(() => {
     const localTheme = localStorage.getItem("theme");
-    setTheme(localTheme ? localTheme : "light");
+    setTheme(localTheme ? localTheme : "black");
+    document.querySelector("html").setAttribute("data-theme", localTheme);
   }, []);
 
   return (
